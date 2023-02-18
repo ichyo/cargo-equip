@@ -111,21 +111,11 @@ Install a `nightly` toolchain and [cargo-udeps](https://github.com/est31/cargo-u
 ❯ cargo install cargo-udeps
 ```
 
-### From Crates.io
+Since this is a forked version, it's not published to crates.io. Install from the master branch.
 
 ```console
-❯ cargo install cargo-equip
+❯ cargo install cargo-equip --git https://github.com/ichyo/cargo-equip
 ```
-
-### From `master` branch
-
-```console
-❯ cargo install cargo-equip --git https://github.com/qryxip/cargo-equip
-```
-
-### GitHub Releases
-
-[Releases](https://github.com/qryxip/cargo-equip/releases)
 
 ## Usage
 
