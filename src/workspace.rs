@@ -706,18 +706,20 @@ pub(crate) trait PackageIdExt {
 
 impl PackageIdExt for cm::PackageId {
     fn mask_path(&self) -> String {
-        if_chain! {
-            if let [s1, s2] = *self.repr.split(" (path+").collect::<Vec<_>>();
-            if s2.ends_with(')');
-            then {
-                format!(
-                    "{} (path+{})",
-                    s1,
-                    s2.chars().map(|_| '█').collect::<String>(),
-                )
-            } else {
-                self.repr.clone()
-            }
+        let v: Vec<_> = self.repr.split(" (path+").collect::<Vec<_>>();
+        if v.len() == 2 && v[1].ends_with(')') {
+            format!(
+                "{} (path+{})",
+                v[0],
+                v[1].chars().map(|_| '█').collect::<String>(),
+            )
+        } else if self.repr.starts_with("path+") {
+            format!(
+                "path+{}",
+                self.repr.chars().skip(5).map(|_| '█').collect::<String>()
+            )
+        } else {
+            self.repr.clone()
         }
     }
 }
