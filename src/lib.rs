@@ -1085,6 +1085,7 @@ fn bundle(
                 cargo_equip_mod_name,
                 libs.iter()
                     .filter(|(_, (p, _, _, _))| p.has_lib())
+                    .filter(|(_, (p, _, _, _))| !p.id.repr.contains("path+"))
                     .map(|(k, (p, _, _, _))| (Some(*k), *p)),
             );
 
