@@ -101,6 +101,20 @@ fn users(package: &cm::Package, cache_dir: &Path) -> anyhow::Result<BTreeSet<Use
             btreeset!(User::Github((*username).to_owned()))
         } else if let Some([username, _, rev]) = source
             .repr
+            .strip_prefix("git+ssh://git@github.com/")
+            .map(|s| s.split(|c| ['/', '#'].contains(&c)).collect::<Vec<_>>())
+            .as_deref()
+        {
+            cache
+                .github_com
+                .entry(package.name.clone())
+                .or_default()
+                .entry((*rev).to_owned())
+                .or_default()
+                .insert((*username).to_owned());
+            btreeset!(User::Github((*username).to_owned()))
+        } else if let Some([username, _, rev]) = source
+            .repr
             .strip_prefix("git+https://gitlab.com/")
             .map(|s| s.split(|c| ['/', '#'].contains(&c)).collect::<Vec<_>>())
             .as_deref()
